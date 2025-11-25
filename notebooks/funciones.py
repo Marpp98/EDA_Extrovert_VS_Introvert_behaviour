@@ -57,3 +57,6 @@ def comparativa_media_mediana_moda(df,columnas,target):
         print(f'Moda de {i} según {target}:')
         print(df.groupby(target)[i].agg(lambda x: x.mode()))
         print('\n---------------------------------------------------------\n')
+
+
+print('Funciones ejecutadas correctamente')
