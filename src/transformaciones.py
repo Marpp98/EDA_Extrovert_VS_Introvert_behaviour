@@ -37,6 +37,11 @@ def normalizar_valores_categoricos (df,columnas):
         df[i] = df[i].str.lower().str.strip()
     return df
 
+def contar_nulos(df,columnas):
+    for i in columnas:
+        nulos = df[i].isna().sum()
+        print(f'Valores nulos de {i} = {nulos}')
+
 
 def comparativa_media_mediana_moda(df,columnas,target):
     '''Función que permite obtener la media, la media y la moda agrupada por la columna de preferencia.
@@ -57,6 +62,11 @@ def comparativa_media_mediana_moda(df,columnas,target):
         print(f'Moda de {i} según {target}:')
         print(df.groupby(target)[i].agg(lambda x: x.mode()))
         print('\n---------------------------------------------------------\n')
+
+def imputar_mediana_grupos(df,columnas,target):
+    for i in columnas:
+        df[i] = df.groupby(target)[i].transform(lambda x:x.fillna(x.median()))
+    return df
 
 
 print('Funciones ejecutadas correctamente')
