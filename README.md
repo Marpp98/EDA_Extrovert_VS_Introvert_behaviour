@@ -7,6 +7,7 @@ El presente trabajo trata de analizar un conjunto de datos relacionado con los r
 
 
 ## 📁 Estructura del proyecto
+```
 /
 ├── data/                       # Datos originales y transformados
 │   ├── data_transformed.csv
@@ -25,7 +26,7 @@ El presente trabajo trata de analizar un conjunto de datos relacionado con los r
 │   └── transformaciones.py     # Funciones de limpieza y transformación de datos
 │
 └── README.md                   # Documentación principal del repositorio
-
+```
 
 ## 🧩 Metodología
 El proyecto siguió la siguiente frecuencia:
