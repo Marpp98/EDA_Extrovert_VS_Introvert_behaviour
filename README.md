@@ -40,9 +40,8 @@ En esta primera parte, el proyecto se centra en obtener las caracteristicas gene
 A continuación se tomaron decisiones sobre el tratamiento de datos. Las cuales fueron:
 - Normalización de títulos de las columnas.
 - Normalización de variables categóricas.
-- Imputación de nulos:
-    - Variables categóricas:
-    - Variables numéricas: 
+- Eliminación de nulos: dejaun total de 
+     
 
 
 
