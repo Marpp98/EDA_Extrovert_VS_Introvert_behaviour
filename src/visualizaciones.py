@@ -3,34 +3,131 @@ import pandas as pd
 import seaborn as sns
 from scipy.stats import ttest_ind, chi2_contingency
 
-def pintar_grafico_barras_uni(df,columnas):
-    for i in columnas:
-        plt.figure(figsize=(6,4))
-        sns.countplot(data=df, x=i)
-        plt.title(f'Distribución de {i}')
-        plt.show()
+def pintar_grafico_barras_uni(df,columnas,cols = 2):
+    ''' Función que crea un grid para dibujar un gráfico de barras para cada una de las variables que se pasan.
 
-def pintar_distrib_num_uni(df,columnas):
-    for i in columnas:
-        plt.figure(figsize=(6,4))
-        sns.histplot(df[i], bins=8, kde=True)
-        plt.title(f'Distribución de {i}')
-        plt.xlabel(i)
-        plt.show()
+      df: dataframe a analizar
+      columnas: lista de columnas
+      cols: número de columnas que quieres que aparezcan en el grid. Por defecto es dos.
+      '''
+    total = len(columnas)
+    filas = (total + cols - 1) // cols
 
-def grafico_barras_categoricas_target(df,categoricas,target):
-    for i in categoricas:
-        plt.figure(figsize=(7,5))
-        sns.countplot(data=df, x=target, hue=i)
-        plt.title(f'Distribución de {target} según {i}')
-        plt.show()
+    fig, axes = plt.subplots(filas, cols, figsize=(6*cols, 5*filas))
 
-def dibujar_boxplot(df,x,y):
-    plt.figure(figsize=(6,4))
-    sns.boxplot(data=df, x=x, y=y)
-    plt.title(f'{y} según {x}')
-    plt.xlabel(x)
-    plt.ylabel(f'Frecuencia de {y}')
+    if filas * cols == 1:
+        axes = [axes]
+    else:
+        axes = axes.flatten()
+    
+    for i,col in enumerate(columnas):
+        sns.countplot(data=df, x=col, hue = col, ax = axes[i])
+        axes[i].set_title(f'Distribución de {col}')
+
+    for j in range(total, len(axes)):
+        axes[j].axis("off")
+
+    plt.tight_layout(pad = 3)
+    plt.show()
+
+
+
+def pintar_distrib_num_uni(df,columnas,cols = 3):
+    ''' Función que crea un grid para dibujar el histograma de cada una de las variables que se pasan,
+      ajustando los bins a la cantidad máxima de valores unicos de cada variable.
+      
+      df: dataframe a analizar
+      columnas: lista de columnas
+      cols: número de columnas que quieres que aparezcan en el grid. Por defecto es tres.
+      '''
+    
+    total = len(columnas)
+    filas = (total + cols - 1) // cols
+
+    fig, axes = plt.subplots(filas, cols, figsize=(5*cols, 4*filas))
+
+    if filas * cols == 1:
+        axes = [axes]
+    else:
+        axes = axes.flatten()
+
+    for i,col in enumerate(columnas):
+        n_bins = df[col].nunique()
+        sns.histplot(df[col], bins=n_bins, kde=True, ax = axes[i])
+        axes[i].set_title(f'Distribución de {col}')
+        axes[i].set_xlabel(col)
+
+
+    for j in range(total, len(axes)):
+        axes[j].axis("off")
+
+    plt.tight_layout(pad = 3)
+    plt.show()
+
+
+
+def grafico_barras_categoricas_target(df,columnas,target,cols = 2):
+    ''' Función que crea un grid para dibujar un grafico de barras agrupado por los grupos de otra variable.
+      
+      df: dataframe a analizar.
+      columnas: lista de columnas.
+      target: variable que divide la columna en base a grupos.
+      cols: número de columnas que quieres que aparezcan en el grid. Por defecto es dos.
+      '''
+
+    total = len(columnas)
+    filas = (total + cols - 1) // cols
+
+    fig, axes = plt.subplots(filas, cols, figsize=(6*cols, 5*filas))
+
+    if filas * cols == 1:
+        axes = [axes]
+    else:
+        axes = axes.flatten()
+
+    for i,col in enumerate(columnas):
+        sns.countplot(data=df, x=target, hue=col, ax = axes[i])
+        axes[i].set_title(f'Distribución de {target} según {i}')
+        
+
+    for j in range(total, len(axes)):
+        axes[j].axis("off")
+
+    plt.tight_layout(pad = 3)
+    plt.show()
+
+
+
+
+def dibujar_boxplot(df,target,columnas, cols = 3):
+    ''' Función que crea un grid para dibujar el diagrama de caja de cada una de las variables que se pasan.
+      
+      df: dataframe a analizar.
+      columnas: lista de columnas.
+      target: variable que divide la columna en base a grupos.
+      cols: número de columnas que quieres que aparezcan en el grid. Por defecto es tres.
+      '''
+
+    total = len(columnas)
+    filas = (total + cols - 1) // cols
+
+    fig, axes = plt.subplots(filas, cols, figsize=(6*cols, 5*filas))
+
+    if filas * cols == 1:
+        axes = [axes]
+    else:
+        axes = axes.flatten()
+
+    for i,col in enumerate(columnas):
+        sns.boxplot(data=df, x=target, y=col, hue= target, ax = axes[i])
+        axes[i].set_title(f'{col} según {target}')
+        axes[i].set_xlabel(target)
+        axes[i].set_ylabel(f'Frecuencia de {col}')
+     
+    for j in range(total, len(axes)):
+        axes[j].axis("off")
+
+    plt.tight_layout(pad = 3)
     plt.show()
 
 def obtener_p_value (df,target,valor1,valor2,columnas):
@@ -41,14 +138,7 @@ def obtener_p_value (df,target,valor1,valor2,columnas):
 
         print(f'P-value de {i} = {p}')
 
-def dibujar_boxplot(df,target,columnas):
-    for i in columnas:
-        plt.figure(figsize=(6,4))
-        sns.boxplot(data=df, x=target, y=i)
-        plt.title(f'{i} según {target}')
-        plt.xlabel(target)
-        plt.ylabel(f'Frecuencia de {i}')
-        plt.show()
+
 
 def obtener_p_value (df,target,valor1,valor2,columnas):
     for i in columnas:
@@ -67,3 +157,45 @@ def calculo_tabla_contingencia_chi2(df,target,columnas):
         print (tabla_contingencia)
         print(f'\nP-value de {i} = {p_value}')
         print (f'--------------------------')
+
+
+def dibujar_medias_por_grupo(df, target,columnas,max_cols=3):
+    '''Función que va creando grids en funcion de si las variables son de tiempo, cantidad o tamaño y representa sus valores medios segín grupos.
+    df: dataframe que se quiere representar
+    target: variable por la que se quieren agrupar las demás
+    columnas: lista de variables que se quieren repreentar
+    max_cols: maximo de columnas a representar. Por defecto es 3.
+    '''
+    grupos = {
+        "Tiempo": ['time_spent_alone'],
+        "Cantidad": ['social_event_attendance',
+                    'going_outside',
+                    'post_frequency'],
+        "Tamaño": ['friends_circle_size']
+    }
+    
+    for grupo, columnas in grupos.items():
+        total = len(columnas)
+        cols = min(total, max_cols)
+        filas = (total + cols - 1) // cols
+
+        fig, axes = plt.subplots(filas, cols, figsize=(5*cols, 4*filas))
+
+        if filas * cols == 1:
+            axes = [axes]
+        else:
+            axes = axes.flatten()
+
+        for i, col in enumerate(columnas):
+            sns.barplot(data=df, x=target, y=col, hue = target, ax=axes[i], dodge=False)
+            axes[i].set_title(col)
+            axes[i].set_xlabel(target)
+            axes[i].set_ylabel("Media")
+
+        for j in range(total, len(axes)):
+            axes[j].axis("off")
+
+
+        plt.tight_layout(pad=2)
+        plt.suptitle(f"Variables de {grupo}", fontsize=18, y=1.02)
+        plt.show()
