@@ -30,6 +30,35 @@ def pintar_grafico_barras_uni(df,columnas,cols = 2):
     plt.tight_layout(pad = 3)
     plt.show()
 
+def boxplot_uni(df,columnas, cols = 3):
+    ''' Función que crea un grid para dibujar el diagrama de caja de cada una de las variables que se pasan.
+      
+      df: dataframe a analizar.
+      columnas: lista de columnas.
+      cols: número de columnas que quieres que aparezcan en el grid. Por defecto es tres.
+      '''
+
+    total = len(columnas)
+    filas = (total + cols - 1) // cols
+
+    fig, axes = plt.subplots(filas, cols, figsize=(6*cols, 5*filas))
+
+    if filas * cols == 1:
+        axes = [axes]
+    else:
+        axes = axes.flatten()
+
+    for i,col in enumerate(columnas):
+        sns.boxplot(data=df, y=col, ax = axes[i])
+        axes[i].set_title(f'Boxplot de {col}', fontsize = 16)
+        axes[i].set_ylabel(col, fontsize = 12)
+     
+    for j in range(total, len(axes)):
+        axes[j].axis("off")
+
+    plt.tight_layout(pad = 3)
+    plt.show()
+
 
 
 def pintar_distrib_num_uni(df,columnas,cols = 3):
