@@ -3,7 +3,8 @@ import numpy as np
 
 
 def clasificador_variables(df,target):
-    '''Función que clasifica las variables en numéricas, categóricas y la columna objetivo:
+    '''Función que clasifica las variables en numéricas, categóricas y la columna objetivo.
+
     df: dataframe del que queremos clasificar las columnas
     target: columna objetivo
     '''
@@ -21,7 +22,8 @@ def clasificador_variables(df,target):
 
 
 def contar_valores_categoricos(df,columnas):
-    '''Función que realiza un conteo de los valores únicos de las variables categóricas incluyendo los nulos:
+    '''Función que realiza un conteo de los valores únicos de las variables categóricas incluyendo los nulos.
+
     df: dataframe del que queremos contar los valores únicos de las columnas
     columnas: lista de columnas
     '''
@@ -30,6 +32,13 @@ def contar_valores_categoricos(df,columnas):
         print(df[i].value_counts(dropna = False))
         print('\n')
 
+def normalizar_columnas(df):
+    '''Función que cambia los titulos de las columnas a minuscula y elimina los posibles espacios delante o detras de ellos.
+    
+    df: dataframe al que queremos modificar los títulos de las columnas.'''
+
+    df.columns = df.columns.str.lower().str.strip()
+    return df.columns
 
 def normalizar_valores_categoricos (df,columnas):
     '''Función para normalizar los valores de las columnas categóricas. 
@@ -56,10 +65,15 @@ def cambiar_tipos(df,categoricas,numericas):
     for i in numericas:
         df[i] = pd.to_numeric(df[i], errors = 'coerce').astype('Int64')
 
-    return df
+    return df.info()
 
 
 def contar_nulos(df,columnas):
+    ''' Función que obtiene los nulos de las columnas indicas.
+
+    df: dataframe que queremos analizar.
+    columnas: lista de columnas a analizar
+    '''
     for i in columnas:
         nulos = df[i].isna().sum()
         print(f'Valores nulos de {i} = {nulos}')

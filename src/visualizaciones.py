@@ -172,6 +172,14 @@ def obtener_p_value (df,target,valor1,valor2,columnas):
 
 
 def obtener_p_value (df,target,valor1,valor2,columnas):
+    ''' Función que permite obtener el p-value de las variables numericas
+    
+    df: dataframe a analizar
+    target: variable con la que se quiere analizar el resto
+    valor1,valor2: valores de la columna target
+    columnas: lista de columnas numéricas
+    '''
+
     for i in columnas:
         target_1 = df[df[target]==valor1][i]
         target_2 = df[df[target]==valor2][i]
@@ -181,6 +189,13 @@ def obtener_p_value (df,target,valor1,valor2,columnas):
 
 
 def calculo_tabla_contingencia_chi2(df,target,columnas):
+    ''' Función que permite obtener el p-value de las variables categoricas.
+    
+    df: dataframe a analizar
+    target: variable con la que se quiere analizar el resto
+    columnas: lista de columnas categóricas
+    '''
+
     for i in columnas:    
         tabla_contingencia = pd.crosstab(df[target], df[i])
         chi2, p_value, d, e = chi2_contingency(tabla_contingencia)
@@ -233,6 +248,12 @@ def dibujar_medias_por_grupo(df, target,columnas,max_cols=3):
 
 
 def dibujar_pairplot(df,target,columnas):
+        '''Función que dibuja un pairplot de las variables numericas respecto a una columna categorica.
+
+        df: dataframe a analizar
+        target: variable discriminatoria
+        columnas: lista de columnas a dibujar
+        '''
         grafico = sns.pairplot(df, hue=target, vars=columnas)
 
         for ax in grafico.axes.flatten():
