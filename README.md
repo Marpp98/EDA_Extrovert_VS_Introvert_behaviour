@@ -31,9 +31,9 @@ El presente trabajo trata de analizar un conjunto de datos relacionado con los r
 
 ```
 
-## 🧩 Metodología
-El proyecto siguió la siguiente frecuencia:
 
+## 🧩 Metodología
+El proyecto siguió la siguiente estructura:
 
 ### 1. Exploración del dataset.
 
@@ -70,7 +70,6 @@ En esta última parte se dividió el análisis en tres subapartados para llevar 
 **3.3 Análisism multivariante**
 - ¿Existe algún perfil multivariante, dentro de las variables numéricas, que defina la personalidad de un individuo?
 - ¿Cómo se relacionan simultaneamente el tiempo a solas, el número de amigos y la frecuencia de publicaciones?
-
      
 ## 📊 Conclusiones
 El análisis indica que el dataset está balanceado respecto a la columna *personality*. Existen variables numéricas discretas y categóricas que permiten diferenciar perfiles distintos para los grupos de personalidad basándose en patrones multivariantes y los valores medios obtenidos  por grupos.
