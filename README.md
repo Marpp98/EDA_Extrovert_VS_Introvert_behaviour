@@ -1,7 +1,7 @@
 # EDA_Extrovert_VS_Introvert_behaviour
 El presente trabajo trata de analizar un conjunto de datos relacionado con los rasgos de personalidad de personas introvertidas y extrovertidas. Para ello se ha realizado un Análisis Exploratorio de Datos donde se han realizado tareas de:
 - Exploración inicial.
-- Transformación y liempieza.
+- Transformación y limpieza.
 - Análisis y visualizaciones.
 - Extracción de conclusiones. 
 
