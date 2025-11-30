@@ -84,7 +84,7 @@ def pintar_distrib_num_uni(df,columnas,cols = 3):
     for i,col in enumerate(columnas):
         n_bins = df[col].nunique()
         sns.histplot(df[col], bins=n_bins, kde=True, ax = axes[i])
-        axes[i].set_title(f'Distribución de {col}')
+        axes[i].set_title(f'Distribución de {col}', fontsize = 16)
         axes[i].set_xlabel(col)
         axes[i].xaxis.set_major_locator(mtick.MaxNLocator(integer=True))
 
@@ -118,7 +118,7 @@ def grafico_barras_categoricas_target(df,columnas,target,cols = 2):
 
     for i,col in enumerate(columnas):
         sns.countplot(data=df, x=target, hue=col, ax = axes[i])
-        axes[i].set_title(f'Distribución de {target} según {i}')
+        axes[i].set_title(f'Distribución de {target} según {col}', fontsize = 16)
         
 
     for j in range(total, len(axes)):
@@ -151,9 +151,9 @@ def dibujar_boxplot(df,target,columnas, cols = 3):
 
     for i,col in enumerate(columnas):
         sns.boxplot(data=df, x=target, y=col, hue= target, ax = axes[i])
-        axes[i].set_title(f'{col} según {target}')
+        axes[i].set_title(f'{col} según {target}', fontsize = 16)
         axes[i].set_xlabel(target)
-        axes[i].set_ylabel(f'Frecuencia de {col}')
+        axes[i].set_ylabel(f'{col}')
      
     for j in range(total, len(axes)):
         axes[j].axis("off")
@@ -229,4 +229,20 @@ def dibujar_medias_por_grupo(df, target,columnas,max_cols=3):
 
         plt.tight_layout(pad=2)
         plt.suptitle(f"Variables de {grupo}", fontsize=18, y=1.02)
+        plt.show()
+
+
+def dibujar_pairplot(df,target,columnas):
+        grafico = sns.pairplot(df, hue=target, vars=columnas)
+
+        for ax in grafico.axes.flatten():
+            if ax is not None:
+                ax.xaxis.set_major_locator(mtick.MaxNLocator(integer=True, nbins = 3))
+                ax.yaxis.set_major_locator(mtick.MaxNLocator(integer=True, nbins = 5))
+
+        grafico.fig.tight_layout(pad=1)
+        grafico.fig.subplots_adjust(right=0.95)
+
+        grafico._legend.set_bbox_to_anchor((1.05, 0.5)) # x: derecha del grid, y: centro vertical
+        grafico._legend.set_title(target)
         plt.show()
