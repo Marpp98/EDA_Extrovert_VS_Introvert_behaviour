@@ -1,4 +1,5 @@
 import matplotlib.pyplot as plt
+import matplotlib.ticker as mtick
 import pandas as pd
 import seaborn as sns
 from scipy.stats import ttest_ind, chi2_contingency
@@ -85,6 +86,7 @@ def pintar_distrib_num_uni(df,columnas,cols = 3):
         sns.histplot(df[col], bins=n_bins, kde=True, ax = axes[i])
         axes[i].set_title(f'Distribución de {col}')
         axes[i].set_xlabel(col)
+        axes[i].xaxis.set_major_locator(mtick.MaxNLocator(integer=True))
 
 
     for j in range(total, len(axes)):
