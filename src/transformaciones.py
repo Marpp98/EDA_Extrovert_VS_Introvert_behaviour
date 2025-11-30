@@ -1,3 +1,7 @@
+import pandas as pd
+import numpy as np
+
+
 def clasificador_variables(df,target):
     '''Función que clasifica las variables en numéricas, categóricas y la columna objetivo:
     df: dataframe del que queremos clasificar las columnas
@@ -30,12 +34,30 @@ def contar_valores_categoricos(df,columnas):
 def normalizar_valores_categoricos (df,columnas):
     '''Función para normalizar los valores de las columnas categóricas. 
     Elimina los posibles espacios que existan antes y después de cada valor y lo pasa todo a minúscula.
+
     df: dataframe del que queremos normalizar los valores
     columnas: lista de columnas
     '''
     for i in columnas:
         df[i] = df[i].str.lower().str.strip()
     return df
+
+
+def cambiar_tipos(df,categoricas,numericas):
+    '''Función que cambia los tipos de las columnas que representan categorías por category 
+    e int64 para las variables numericas discretas.
+
+    df: dataframe del que queremos modificar los tipos
+    categoricas: columnas categóricas que queremos cambiar el tipo
+    numericas: columnas numéricas que queremos cambiar el tipo
+    '''
+    df[categoricas]= df[categoricas].astype('category')
+
+    for i in numericas:
+        df[i] = pd.to_numeric(df[i], errors = 'coerce').astype('Int64')
+
+    return df
+
 
 def contar_nulos(df,columnas):
     for i in columnas:
